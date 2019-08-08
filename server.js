@@ -4,6 +4,7 @@ dotenv.config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const knex = require('knex');
+const bcrypt = require('bcryptjs');
 const app = express();
 app.use(bodyParser.json());
 
