@@ -5,10 +5,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const knex = require('knex');
 const bcrypt = require('bcryptjs');
-const app = express();
-app.use(bodyParser.json());
+const cors = require('cors');
 
 const register = require('./controllers/register');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
 
 const db = knex({
 	client: 'pg',
@@ -20,6 +23,7 @@ const db = knex({
 	}
 });
 
+app.get('/', (req, res) => { res.send(database.users) })
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) });
 
 app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT}!`));
