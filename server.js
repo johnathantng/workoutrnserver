@@ -7,6 +7,7 @@ const knex = require('knex');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
 
+const login = require('./controllers/login');
 const register = require('./controllers/register');
 
 const app = express();
@@ -23,7 +24,8 @@ const db = knex({
 	}
 });
 
-app.get('/', (req, res) => { res.send(database.users) })
+app.get('/', (req, res) => { res.send(database.users) });
+app.post('/login', (req, res) => { login.handleLogin(req, res, db, bcrypt) });
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) });
 
 app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT}!`));

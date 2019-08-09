@@ -1,8 +1,8 @@
 const handleRegister = (req, res, db, bcrypt) => {
 	const { password } = req.body;
-	let { name, email } = req.body;
+	let { username, email } = req.body;
 
-	name = name.toLowerCase();
+	username = username.toLowerCase();
 	email = email.toLowerCase();
 	const salt = bcrypt.genSaltSync(11);
 	const passHash = bcrypt.hashSync(password, salt);
@@ -11,7 +11,7 @@ const handleRegister = (req, res, db, bcrypt) => {
 		trx.insert({
 			password: passHash,
 			email: email,
-			username: name
+			username: username
 		})
 		.into('login')
 		.returning('email')
@@ -19,7 +19,7 @@ const handleRegister = (req, res, db, bcrypt) => {
 			return trx('users')
 			.insert({
 				email: loginEmail[0],
-				username: name
+				username: username
 			})
 			.then(user => {
 				res.json('Registered user');
