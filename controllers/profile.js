@@ -2,7 +2,6 @@ const handleProfileGet = (req, res, db) => {
 	const { id } = req.params;
 	db.select('*').from('login').where({ id: id })
 		.then(user => {
-			console.log(user[0])
 		if (user.length) {
 			res.json(user[0])
 		} else {
@@ -17,6 +16,8 @@ const handleProfileCreate = (req, res, db) => {
 	const { gender, age, height, weight } = req.body;
 
 	if (!gender || !age || !height || !weight) {
+		return res.status(400).json('incorrect form submission')
+	} else if (gender == 0 || age == 0 || height == 0 || weight == 0) {
 		return res.status(400).json('incorrect form submission')
 	} else {
 
