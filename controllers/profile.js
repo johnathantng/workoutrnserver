@@ -1,6 +1,6 @@
 const handleProfileGet = (req, res, db) => {
 	const { id } = req.params;
-	db.select('*').from('login').where({user_id: id})
+	db.select('*').from('login').where({ id: id })
 		.then(user => {
 			console.log(user[0])
 		if (user.length) {
@@ -13,16 +13,16 @@ const handleProfileGet = (req, res, db) => {
 }
 
 const handleProfileCreate = (req, res, db) => {
-	const { id, gender, age, height, weight } = req.body;
+	const { id } = req.params;
+	const { gender, age, height, weight } = req.body;
 
 	if (!gender || !age || !height || !weight) {
 		return res.status(400).json('incorrect form submission')
 	} else {
 
 		return db('users')
-			.where('id', '=', id)
+			.where({ id: id })
 			.update({
-				id: id,
 				gender: gender,
 				age: age,
 				height: height,
@@ -32,7 +32,7 @@ const handleProfileCreate = (req, res, db) => {
 				res.json("user profile updated");
 			})
 			.catch(err => {
-				res.status(400).json('unable to create user')
+				res.status(400).json('unable to create user');
 			});
 	}
 }
