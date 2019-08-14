@@ -10,12 +10,19 @@ const handleLogin = (req, res, db, bcrypt) => {
 		.then(data => {
 			const isValid = bcrypt.compareSync(hash, data[0].hash);
 			if (isValid) {
-				return db.select('*').from('users')
+				db('login')
 					.where('username', '=', username)
-					.then(user => {
-						return res.json(user[0]);
+					.update({
+						last_login: new Date()
 					})
-					.catch(error => res.status(404).json('unable to get user'))
+					.then(() => {
+						return db.select('*').from('users')
+						.where('username', '=', username)
+						.then(user => {
+							return res.json(user[0]);
+						})
+						.catch(error => res.status(404).json('unable to get user'))
+					})
 			} else {
 				res.status(400).json('wrong credentials')
 			}

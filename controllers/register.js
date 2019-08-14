@@ -15,14 +15,14 @@ const handleRegister = (req, res, db, bcrypt) => {
 			trx.insert({
 				hash: passHash,
 				email: email,
-				username: username
+				username: username,
+				created_on: new Date()
 			})
 			.into('login')
 			.returning('email')
 			.then(loginEmail => {
 				return trx('users')
 				.insert({
-					email: loginEmail[0],
 					username: username
 				})
 				.then(user => {
