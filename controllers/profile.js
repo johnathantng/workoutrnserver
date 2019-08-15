@@ -38,7 +38,27 @@ const handleProfileCreate = (req, res, db) => {
 	}
 }
 
+const handleWorkoutCreate = (req, res, db) => {
+	const { id, exercise } = req.params;
+	const { workoutName, workoutType, workoutReps, workoutSets } = req.body;
+
+	return db('workouts')
+		.insert({
+			id: id,
+			workout: workoutName,
+			type: workoutType,
+			target_reps: workoutReps,
+			target_sets: workoutSets
+		})
+		.then(() => res.json('workout added'))
+		.catch(err => {
+			console.log(err)
+			res.status(400).json('unable to add workout')
+		});
+}
+
 module.exports = {
 	handleProfileGet: handleProfileGet,
-	handleProfileCreate: handleProfileCreate
+	handleProfileCreate: handleProfileCreate,
+	handleWorkoutCreate: handleWorkoutCreate
 };
