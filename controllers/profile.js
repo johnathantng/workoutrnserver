@@ -58,8 +58,23 @@ const handleWorkoutCreate = (req, res, db) => {
 		});
 }
 
+const handleWorkoutGet = (req, res, db) => {
+	const { id, exercise } = req.params;
+
+	db.select('*').from('workouts').where({ id: id })
+		.then(data => {
+			if (data.length) {
+				res.json(data)
+			} else {
+				res.status(400).json('not found')
+			}
+		})
+		.catch(err => res(400).json('something went wrong'))
+}
+
 module.exports = {
 	handleProfileGet: handleProfileGet,
+	handleWorkoutGet: handleWorkoutGet,
 	handleProfileCreate: handleProfileCreate,
 	handleWorkoutCreate: handleWorkoutCreate
 };
