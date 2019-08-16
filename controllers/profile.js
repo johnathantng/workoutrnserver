@@ -40,11 +40,12 @@ const handleProfileCreate = (req, res, db) => {
 
 const handleWorkoutCreate = (req, res, db) => {
 	const { id, exercise } = req.params;
-	const { workoutName, workoutType, workoutReps, workoutSets } = req.body;
+	const { userName, workoutName, workoutType, workoutReps, workoutSets } = req.body;
 
 	return db('workouts')
 		.insert({
 			id: id,
+			username: userName,
 			workout: workoutName,
 			type: workoutType,
 			target_reps: workoutReps,
