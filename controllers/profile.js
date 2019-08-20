@@ -73,9 +73,10 @@ const handleWorkoutGet = (req, res, db) => {
 }
 
 const handleWorkoutUpdate = (req, res, db) => {
-	const { id, exercise } = req.params;
+	const { id, workout_id } = req.params;
+	const { userName, workoutName, workoutType, workoutReps, workoutSets } = req.body;
 
-	return db('workouts').where({ id: id })
+	return db('workouts').where({ workout_id: workout_id })
 		.update({
 			workout: workoutName,
 			type: workoutType,
