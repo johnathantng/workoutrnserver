@@ -69,12 +69,30 @@ const handleWorkoutGet = (req, res, db) => {
 				res.status(400).json('not found')
 			}
 		})
-		.catch(err => res(400).json('something went wrong'))
+		.catch(err => res.status(400).json('something went wrong'))
+}
+
+const handleWorkoutUpdate = (req, res, db) => {
+	const { id, exercise } = req.params;
+
+	return db('workouts').where({ id: id })
+		.update({
+			workout: workoutName,
+			type: workoutType,
+			target_reps: workoutReps,
+			target_sets: workoutSets
+		})
+		.then(() => res.json('workout updated'))
+		.catch(err => {
+			console.log(err)
+			res.status(400).json('unable to add workout')
+		})
 }
 
 module.exports = {
 	handleProfileGet: handleProfileGet,
 	handleWorkoutGet: handleWorkoutGet,
+	handleWorkoutUpdate: handleWorkoutUpdate,
 	handleProfileCreate: handleProfileCreate,
 	handleWorkoutCreate: handleWorkoutCreate
 };
