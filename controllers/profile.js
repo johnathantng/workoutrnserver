@@ -119,6 +119,7 @@ const handleWorkoutDelete = (req, res, db) => {
 module.exports = {
 	handleProfileGet: handleProfileGet,
 	handleWorkoutGet: handleWorkoutGet,
+	handleWorkoutIdGet: handleWorkoutIdGet,
 	handleWorkoutUpdate: handleWorkoutUpdate,
 	handleWorkoutDelete: handleWorkoutDelete,
 	handleProfileCreate: handleProfileCreate,
