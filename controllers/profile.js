@@ -74,7 +74,7 @@ const handleWorkoutGet = (req, res, db) => {
 
 const handleWorkoutUpdate = (req, res, db) => {
 	const { id, workout_id } = req.params;
-	const { userName, workoutName, workoutType, workoutReps, workoutSets } = req.body;
+	const { workoutName, workoutType, workoutReps, workoutSets } = req.body;
 
 	return db('workouts').where({ workout_id: workout_id })
 		.update({
@@ -91,7 +91,15 @@ const handleWorkoutUpdate = (req, res, db) => {
 }
 
 const handleWorkoutDelete = (req, res, db) => {
+	const { id, workout_id } = req.params;
 
+	return db('workouts').where({ workout_id: workout_id })
+		.delete('*')
+		.then(() => res.json('workout deleted'))
+		.catch(err => {
+			console.log(err);
+			res.status(400).json('unable to delete workout');
+		})
 }
 
 module.exports = {
