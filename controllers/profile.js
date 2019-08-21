@@ -86,14 +86,19 @@ const handleWorkoutUpdate = (req, res, db) => {
 		.then(() => res.json('workout updated'))
 		.catch(err => {
 			console.log(err)
-			res.status(400).json('unable to add workout')
+			res.status(400).json('unable to update workout')
 		})
+}
+
+const handleWorkoutDelete = (req, res, db) => {
+
 }
 
 module.exports = {
 	handleProfileGet: handleProfileGet,
 	handleWorkoutGet: handleWorkoutGet,
 	handleWorkoutUpdate: handleWorkoutUpdate,
+	handleWorkoutDelete: handleWorkoutDelete,
 	handleProfileCreate: handleProfileCreate,
 	handleWorkoutCreate: handleWorkoutCreate
 };
