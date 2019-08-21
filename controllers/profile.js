@@ -11,6 +11,20 @@ const handleProfileGet = (req, res, db) => {
 		.catch(err => res.status(400).json('error getting user'))
 }
 
+const handleWorkoutIdGet = (req, res, db) => {
+	const { id, workout_id } = req.params;
+
+	db('workouts').where({ workout_id: workout_id })
+		.then(data => {
+			if (data.length) {
+				res.json(data[0])
+			} else {
+				res.status(400).json('Not found')
+			}
+		})
+		.catch(err => res.status(400).json('error getting workout'))
+}
+
 const handleProfileCreate = (req, res, db) => {
 	const { id } = req.params;
 	const { gender, age, height, weight } = req.body;
@@ -94,7 +108,7 @@ const handleWorkoutDelete = (req, res, db) => {
 	const { id, workout_id } = req.params;
 
 	return db('workouts').where({ workout_id: workout_id })
-		.delete('*')
+		.delete()
 		.then(() => res.json('workout deleted'))
 		.catch(err => {
 			console.log(err);

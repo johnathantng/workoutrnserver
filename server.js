@@ -28,6 +28,7 @@ const db = knex({
 app.get('/', (req, res) => { res.send(database.users) });
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) });
 app.get('/profile/:id/workouts', (req, res) => { profile.handleWorkoutGet(req, res, db) });
+app.get('/profile/:id/workouts/:workout_id', (req, res) => { profile.handleWorkoutIdGet(req, res, db) });
 app.put('/profile/:id/workouts/:workout_id', (req, res) => { profile.handleWorkoutUpdate(req, res, db) });
 app.delete('/profile/:id/workouts/:workout_id', (req, res) => { profile.handleWorkoutDelete(req, res, db) });
 app.post('/profile/:id', (req, res) => { profile.handleProfileCreate(req, res, db) });
