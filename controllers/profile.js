@@ -62,6 +62,8 @@ const handleWorkoutCreate = (req, res, db) => {
 			username: userName,
 			workout: workoutName,
 			type: workoutType,
+			current_reps: 0,
+			current_sets: 0,
 			target_reps: workoutReps,
 			target_sets: workoutSets
 		})
@@ -88,14 +90,23 @@ const handleWorkoutGet = (req, res, db) => {
 
 const handleWorkoutUpdate = (req, res, db) => {
 	const { id, workout_id } = req.params;
-	const { workoutName, workoutType, workoutReps, workoutSets } = req.body;
+	const { 
+		workoutName, 
+		workoutType, 
+		currentReps,
+		currentSets,
+		targetReps, 
+		targetSets 
+	} = req.body;
 
 	return db('workouts').where({ workout_id: workout_id })
 		.update({
 			workout: workoutName,
 			type: workoutType,
-			target_reps: workoutReps,
-			target_sets: workoutSets
+			current_reps: currentReps,
+			current_sets: currentSets,
+			target_reps: targetReps,
+			target_sets: targetSets
 		})
 		.then(() => res.json('workout updated'))
 		.catch(err => {
