@@ -38,7 +38,7 @@ const handleMealGet = (req, res, db) => {
 const handleMealIdGet = (req, res, db) => {
 	const { id, meal_id } = req.params;
 
-	db('workouts').where({ meal_id: meal_id })
+	db('meals').where({ meal_id: meal_id })
 		.then(data => {
 			if (data.length) {
 				res.json(data[0])
@@ -58,6 +58,7 @@ const handleMealUpdate = (req, res, db) => {
 		protein,
 		fat
 	} = req.body;
+	console.log(req.params, req.body)
 
 	return db('meals').where({ meal_id: meal_id })
 		.update({
