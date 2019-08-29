@@ -6,7 +6,7 @@ const handleLogin = (req, res, db, bcrypt) => {
 	}
 
 	db.select('username', 'hash').from('login')
-		.where('username', '=', username)
+		.whereRaw('LOWER(username) LIKE ?', '%'+username.toLowerCase()+'%')
 		.then(data => {
 			const isValid = bcrypt.compareSync(hash, data[0].hash);
 			if (isValid) {
