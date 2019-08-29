@@ -1,13 +1,11 @@
 const handleRegister = (req, res, db, bcrypt) => {
 	const { hash } = req.body;
-	let { username, email } = req.body;
+	const { username, email } = req.body;
 
 	if (!email || !username || !hash) {
 		return res.status(400).json('incorrect form submission')
 	} else {
 
-		username = username.toLowerCase();
-		email = email.toLowerCase();
 		const salt = bcrypt.genSaltSync(11);
 		const passHash = bcrypt.hashSync(hash, salt);
 
