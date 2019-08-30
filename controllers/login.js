@@ -5,8 +5,10 @@ const handleLogin = (req, res, db, bcrypt) => {
 		return res.status(400).json('incorrect form submission');
 	}
 
+	const convertUser = username.toLowerCase();
+
 	db.select('username', 'hash').from('login')
-		.whereRaw('LOWER(username) LIKE ?', '%'+username.toLowerCase()+'%')
+		.where('username', '=', username)
 		.then(data => {
 			const isValid = bcrypt.compareSync(hash, data[0].hash);
 			if (isValid) {
@@ -17,7 +19,7 @@ const handleLogin = (req, res, db, bcrypt) => {
 					})
 					.then(() => {
 						return db.select('*').from('users')
-						.where('username', '=', username)
+						.where('username', '=', convertUser)
 						.then(user => {
 							return res.json(user[0]);
 						})
