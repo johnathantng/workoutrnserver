@@ -7,6 +7,8 @@ const handleLogin = (req, res, db, bcrypt) => {
 
 	const convertUser = username.toLowerCase();
 
+	//research on case insensitivity
+
 	db.select('username', 'hash').from('login')
 		.where('username', '=', username)
 		.then(data => {
