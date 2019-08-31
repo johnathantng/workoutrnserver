@@ -2,6 +2,8 @@ const handleRegister = (req, res, db, bcrypt) => {
 	const { hash } = req.body;
 	const { username, email } = req.body;
 
+	//need case insensitivity in register field
+
 	if (!email || !username || !hash) {
 		return res.status(400).json('incorrect form submission')
 	} else {
