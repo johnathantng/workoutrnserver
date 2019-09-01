@@ -8,10 +8,12 @@ const handleLogin = (req, res, db, bcrypt) => {
 	const convertUser = username.toLowerCase();
 
 	//research on case insensitivity
+	//plan is to create another column with login_user for the way the user types in their username
 
 	db.select('username', 'hash').from('login')
 		.where('username', '=', username)
 		.then(data => {
+			res.send(data);
 			const isValid = bcrypt.compareSync(hash, data[0].hash);
 			if (isValid) {
 				db('login')

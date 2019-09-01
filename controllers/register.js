@@ -16,6 +16,7 @@ const handleRegister = (req, res, db, bcrypt) => {
 				hash: passHash,
 				email: email,
 				username: username,
+				login_user: username.toLowerCase(),
 				created_on: new Date()
 			})
 			.into('login')
