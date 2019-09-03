@@ -11,19 +11,19 @@ const handleLogin = (req, res, db, bcrypt) => {
 	//plan is to create another column with login_user for the way the user types in their username
 
 	db.select('username', 'hash').from('login')
-		.where('username', '=', username)
+		.where('login_user', '=', convertUser)
 		.then(data => {
 			res.send(data);
 			const isValid = bcrypt.compareSync(hash, data[0].hash);
 			if (isValid) {
 				db('login')
-					.where('username', '=', username)
+					.where('login_user', '=', convertUser)
 					.update({
 						last_login: new Date()
 					})
 					.then(() => {
 						return db.select('*').from('users')
-						.where('username', '=', convertUser)
+						.where('login_user', '=', convertUser)
 						.then(user => {
 							return res.json(user[0]);
 						})
