@@ -13,7 +13,6 @@ const handleLogin = (req, res, db, bcrypt) => {
 	db.select('username', 'hash').from('login')
 		.where('login_user', '=', convertUser)
 		.then(data => {
-			res.send(data);
 			const isValid = bcrypt.compareSync(hash, data[0].hash);
 			if (isValid) {
 				db('login')
@@ -23,7 +22,7 @@ const handleLogin = (req, res, db, bcrypt) => {
 					})
 					.then(() => {
 						return db.select('*').from('users')
-						.where('login_user', '=', convertUser)
+						.where('username', '=', convertUser)
 						.then(user => {
 							return res.json(user[0]);
 						})

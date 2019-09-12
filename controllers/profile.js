@@ -33,6 +33,7 @@ const handleProfileCreate = (req, res, db) => {
 				res.json("user profile updated");
 			})
 			.catch(err => {
+				console.log(err);
 				res.status(400).json('unable to create user');
 			});
 	}
