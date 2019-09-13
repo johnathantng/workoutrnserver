@@ -22,8 +22,9 @@ const handleLogin = (req, res, db, bcrypt) => {
 					})
 					.then(() => {
 						return db.select('*').from('users')
-						.where('username', '=', convertUser)
+						.where('username', '=', data[0].username)
 						.then(user => {
+							console.log(user);
 							return res.json(user[0]);
 						})
 						.catch(error => res.status(404).json('unable to get user'))
